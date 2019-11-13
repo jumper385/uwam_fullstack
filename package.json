@@ -1,0 +1,12 @@
+{
+  "name": "uwam_frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jumper385/uwam_fullstack.git",
+  "author": "jumper385 <henrychen385@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.10"
+  }
+}
