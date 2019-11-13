@@ -27,6 +27,7 @@ if (process.env.NODE_ENV === 'production'){
 app.route('/api/users')
     .get(async (req,res) => {
         const UserCollection = await Schemas.User.find({}).exec()
+        console.log(UserCollection)
         res.json(UserCollection)
     })
 
