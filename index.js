@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const app = require('express')()
+const express = require('express')
+const app = express()
 const bodyParser = require('body-parser')
 const Schemas = require('./Schemas/Schemas')
 
@@ -14,6 +15,7 @@ mongoose.connect(
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
+app.use(express.static('client/build'))
 
 app.get('/', async (req,res) => {
     const UserCollection = await Schemas.User.find({}).exec()
