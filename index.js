@@ -17,12 +17,12 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('client/build'))
 
-app.get('/api', async (req,res) => {
+app.get('/api/users', async (req,res) => {
     const UserCollection = await Schemas.User.find({}).exec()
     res.json(UserCollection)
 })
 
-app.post('/api', async (req,res) => {
+app.post('/api/users', async (req,res) => {
     const { username, phrase } = req.body
     let newUser = await Schemas.User.create({username: username, phrase:phrase})
     res.json(newUser)
