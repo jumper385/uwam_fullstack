@@ -11,13 +11,12 @@ class App extends React.Component {
 
   onChange = e => {
     this.setState({[e.target.name]:e.target.value})
-    console.log(this.state)
   }
 
   onSubmit = async () => {
-    let userInfo = await axios.get('https://limitless-anchorage-44503.herokuapp.com/api/users')
-    console.log(userInfo.data)
-    console.log(this.state || 'ENTER SOMETHING PLZ')
+    let userInfo = await axios.post(path.join(__dirname, 'api', 'users'), this.state)
+    let userCollection = userInfo ? await axios.get(path.join(__dirname, 'api', 'users')) : 'user couldn\'t be added...'
+    console.log(userCollection || 'ummm... not sure if there are any users just yet...')
   }
 
   render(){
@@ -31,6 +30,7 @@ class App extends React.Component {
       </div>
     );
   }
+  
 }
 
 export default App;

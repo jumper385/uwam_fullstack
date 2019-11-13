@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const path = require('path')
+const cors = require('cors')
 const app = express()
 const bodyParser = require('body-parser')
 const Schemas = require('./Schemas/Schemas')
@@ -14,15 +15,27 @@ mongoose.connect(
     () => console.log(`joined mongo db ${MONGO_URL}`)
 )
 
+app.use((req,res,next) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    next()
+})
+app.options('*', cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
-if (process.env.NODE_ENV === 'production'){
-    app.use(express.static('client/build'))
-    app.get('*', (req,res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
-    })
-}
+app.use(express.static(path.join(__dirname, 'client/build')))
+app.get('/client', (req,res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+})
+
+// if (process.env.NODE_ENV === 'production'){
+//     app.use(express.static('client/build'))
+//     app.get('*', (req,res) => {
+//         res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+//     })
+// }
 
 app.route('/api/users')
     .get(async (req,res) => {
