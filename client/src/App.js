@@ -15,7 +15,7 @@ class App extends React.Component {
   }
 
   onSubmit = async () => {
-    let userInfo = await axios.get('/api/users')
+    let userInfo = await axios.get('https://limitless-anchorage-44503.herokuapp.com/api/users')
     console.log(userInfo.data)
     console.log(this.state || 'ENTER SOMETHING PLZ')
   }
