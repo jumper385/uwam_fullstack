@@ -17,15 +17,28 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('client/build'))
 
-app.get('/api/users', async (req,res) => {
-    const UserCollection = await Schemas.User.find({}).exec()
-    res.json(UserCollection)
-})
+app.route('/api/users')
+    .get(async (req,res) => {
+        const UserCollection = await Schemas.User.find({}).exec()
+        res.json(UserCollection)
+    })
 
-app.post('/api/users', async (req,res) => {
-    const { username, phrase } = req.body
-    let newUser = await Schemas.User.create({username: username, phrase:phrase})
-    res.json(newUser)
-})
+    .post( async (req,res) => {
+        const { username, phrase } = req.body
+        let newUser = await Schemas.User.create({username: username, phrase:phrase})
+        res.json(newUser)
+    })
+
+app.route('/api/articles')
+    .get(async(req,res) => {
+        const ArticleCollection = await Schemas.Article.find({}).exec()
+        res.json(ArticleCollection)
+    })
+
+    .post(async(req,res) => {
+        const {title, article} = req.body
+        let newArticle = await Schemas.Article.create({title:title, article:article})
+        res.json(newArticle)
+    })
 
 app.listen(PORT, () => console.log(`listening to port ${PORT}`))
