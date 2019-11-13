@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 8080
 const MONGO_URL = process.env.MONGO_URI || `mongodb+srv://nova:st18chenh@cluster0-ztrfz.azure.mongodb.net/test?retryWrites=true&w=majority`
 
 mongoose.connect(
-    `${MONGO_URL}/uwam_articles`, 
+    `${MONGO_URL}`, 
     {useUnifiedTopology:true, useNewUrlParser:true},
     () => console.log(`joined mongo db ${MONGO_URL}`)
 )
@@ -24,10 +24,8 @@ app.get('/api', async (req,res) => {
 
 app.post('/api', async (req,res) => {
     const { username, phrase } = req.body
-    const newData = new Schemas.User({username: username, phrase:phrase})
-    const dbFile = await newData.save().exec()
-    res.json(dbFile)
-    console.log(dbFile)
+    let newUser = await Schemas.User.create({username: username, phrase:phrase})
+    res.json(newUser)
 })
 
 app.listen(PORT, () => console.log(`listening to port ${PORT}`))
