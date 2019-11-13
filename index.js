@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const express = require('express')
+const path = require('path')
 const app = express()
 const bodyParser = require('body-parser')
 const Schemas = require('./Schemas/Schemas')
@@ -15,7 +16,13 @@ mongoose.connect(
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
-app.use(express.static('client/build'))
+
+if (process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'))
+    app.get('*', (req,res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 app.route('/api/users')
     .get(async (req,res) => {
