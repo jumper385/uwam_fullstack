@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import path from 'path';
 
 class App extends React.Component {
 
@@ -14,7 +15,7 @@ class App extends React.Component {
   }
 
   onSubmit = async () => {
-    let userInfo = await axios.get('/api/users')
+    let userInfo = await axios.get(path.join(__dirname,'/api/users'))
     console.log(userInfo)
     console.log(this.state || 'ENTER SOMETHING PLZ')
   }
