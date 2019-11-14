@@ -19,7 +19,7 @@ class App extends React.Component {
             </nav>
             <Switch>
               <Route exact path='/client/'><h1>Home</h1></Route>
-              <Route path='/client/articles'><h1><Articles /></h1></Route>
+              <Route path='/client/articles'><Articles /></Route>
               <Route path='/client/gallery'><h1>Gallery</h1></Route>
               <Route path='/client/create'><Create /></Route>
             </Switch>
