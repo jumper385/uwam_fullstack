@@ -5,7 +5,7 @@ class Articles extends Component {
 
   componentDidMount = async() => {
     let articles = await axios.get('/api/articles')
-    this.setState({articles:articles})
+    this.setState({articles:articles.data})
     console.log(this.state)
   }
 
@@ -13,6 +13,11 @@ class Articles extends Component {
     return (
       <div>
         <h1>Current Articles</h1>
+        <div>
+          {this.state ? this.state.articles.map((article, index) => {
+            return(<div>{article.title}</div>)
+          }) : 'no articles just yet...' }
+        </div>
       </div>
     )
   }
