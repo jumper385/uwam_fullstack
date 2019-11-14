@@ -65,4 +65,10 @@ app.route('/api/articles')
         res.json(newArticle)
     })
 
+    .delete(async(req,res) => {
+        console.log(req.body)
+        let deleteArticle = await Schemas.Article.findByIdAndDelete(req.body.id)
+        res.json(deleteArticle)
+    })
+
 app.listen(PORT, () => console.log(`listening to port ${PORT}`))

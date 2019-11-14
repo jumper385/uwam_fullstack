@@ -9,6 +9,13 @@ class Articles extends Component {
     console.log(this.state)
   }
 
+  onClick = async e => {
+    let deleteData = await axios.delete('/api/articles',{data:{id:e.target.name}})
+    let articles = await axios.get('/api/articles')
+    this.setState({articles:articles.data})
+    console.log(deleteData)
+  }
+
   render() {
     return (
       <div>
@@ -17,7 +24,8 @@ class Articles extends Component {
           {this.state ? this.state.articles.map((article, index) => {
             return(
               <div key={article._id}>
-                {article.title} || {article._id}
+                {article.title} || {article._id} || 
+                <button name={article._id} onClick={this.onClick}>x</button>
               </div>
             )
           }) : 'no articles just yet...' }
