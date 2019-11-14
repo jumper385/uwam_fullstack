@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(morgan('dev'))
 
 app.use('/', express.static(path.join(__dirname, 'client/build')))
-app.get('*', (req,res) => {
+app.get('/client*', (req,res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
 })
 
