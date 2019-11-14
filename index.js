@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const express = require('express')
 const path = require('path')
 const cors = require('cors')
+const morgan = require('morgan')
 const app = express()
 const bodyParser = require('body-parser')
 const Schemas = require('./Schemas/Schemas')
@@ -21,12 +22,14 @@ app.use((req,res,next) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next()
 })
+
 app.options('*', cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
+app.use(morgan('dev'))
 
-app.use(express.static(path.join(__dirname, 'client/build')))
-app.get('/client', (req,res) => {
+app.use('/', express.static(path.join(__dirname, 'client/build')))
+app.get('*', (req,res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
 })
 

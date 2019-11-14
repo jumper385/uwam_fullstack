@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown' 
+import path from 'path'
+import axios from 'axios'
 
 class Create extends Component {
 
@@ -12,9 +14,12 @@ class Create extends Component {
     this.setState({[e.target.name]:e.target.value})
   }
 
-  onSubmit = e => {
-    console.log(this.state)
+  onSubmit = async (e) => {
     e.preventDefault()
+    console.log(path.join(__dirname, '/api/articles'))
+    let data = await axios.post(path.join(__dirname, '/api/articles'), this.state)
+    let allArticles = await axios.get(path.join(__dirname, '/api/articles'))
+    console.log(allArticles)
   }
 
   render() {
@@ -24,11 +29,11 @@ class Create extends Component {
         <p>Articles need to be written!!! 🤯</p>
         <form>
           <p>Title</p>
-          <input type='text' onChange={this.onChange}/>
+          <input name='title' type='text' onChange={this.onChange}/>
           <p>Article</p>
           <textarea name='article' onChange={this.onChange}/>
           <br />
-          <input onClick={this.onSubmit} type='submit' />
+          <button onClick={this.onSubmit}>Submit</button>
         </form>
         < ReactMarkdown source={this.state.article || 'no article present'}/>
       </div>
