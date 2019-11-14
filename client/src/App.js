@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import path from 'path';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import Create from './pages/Create';
 
 class App extends React.Component {
     render(){
@@ -19,7 +20,7 @@ class App extends React.Component {
               <Route exact path='/'><h1>Home</h1></Route>
               <Route path='/articles'><h1>Articles</h1></Route>
               <Route path='/gallery'><h1>Gallery</h1></Route>
-              <Route path='/create'><h1>Create Article</h1></Route>
+              <Route path='/create'><Create /></Route>
             </Switch>
           </div>
         </Router>
