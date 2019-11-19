@@ -71,4 +71,11 @@ app.route('/api/articles')
         res.json(deleteArticle)
     })
 
+app.route('/api/articles/:id')
+    .get(async(req,res) => {
+        console.log(req.params.id)
+        const Article = await Schemas.Article.findOne({_id:req.params.id})
+        res.json(Article)
+    })
+
 app.listen(PORT, () => console.log(`listening to port ${PORT}`))

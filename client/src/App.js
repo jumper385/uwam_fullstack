@@ -4,6 +4,7 @@ import path from 'path';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Create from './pages/Create';
 import Articles from './pages/Articles'
+import ArticlePage from './pages/ArticlePage'
 
 class App extends React.Component {
     render(){
@@ -19,9 +20,10 @@ class App extends React.Component {
             </nav>
             <Switch>
               <Route exact path='/client/'><h1>Home</h1></Route>
-              <Route path='/client/articles'><Articles /></Route>
+              <Route exact path='/client/articles'><Articles /></Route>
               <Route path='/client/gallery'><h1>Gallery</h1></Route>
               <Route path='/client/create'><Create /></Route>
+              <Route path='/client/articles/:id' render={({match}) => <ArticlePage data={match.params.id}/>} />
             </Switch>
           </div>
         </Router>
