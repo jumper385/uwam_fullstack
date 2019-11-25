@@ -6,8 +6,8 @@ class Articles extends Component {
 
   componentDidMount = async() => {
     let articles = await axios.get('/api/articles')
+    console.log(articles)
     this.setState({articles:articles.data})
-    console.log(this.state)
   }
 
   onClick = async e => {

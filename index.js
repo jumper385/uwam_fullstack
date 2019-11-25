@@ -13,23 +13,26 @@ const shortid = require('shortid')
 const Schemas = require('./Schemas/Schemas')
 
 const PORT = process.env.PORT || 8080
-const MONGO_URL = process.env.MONGO_URI || `mongodb+srv://nova:st18chenh@cluster0-ztrfz.azure.mongodb.net/test?retryWrites=true&w=majority`
+const MONGO_URL = `mongodb+srv://nova:st18chenh@cluster0-ztrfz.azure.mongodb.net/uwam_articles?retryWrites=true&w=majority`
+const MONGO_FILE_URL = `mongodb+srv://nova:st18chenh@cluster0-ztrfz.azure.mongodb.net/uwam_files?retryWrites=true&w=majority`
 
-const conn = mongoose.createConnection(
-    `${MONGO_URL}`,
+mongoose.connect(`${MONGO_URL}`, {useUnifiedTopology:true, useNewUrlParser:true})
+
+const imgconn = mongoose.createConnection(
+    `${MONGO_FILE_URL}`,
     {useUnifiedTopology:true, useNewUrlParser:true}
 )
 
 let gfs = null
-conn.once('open', () => {
-    gfs = Grid(conn.db, mongoose.mongo)
+imgconn.once('open', () => {
+    gfs = Grid(imgconn.db, mongoose.mongo)
     gfs.collection('fs')
 })
 
 // const imgConn = mongoose.connect(imgURL, {useUnifiedTopology:true, useNewUrlParser:true})
 
 const storage = new GridFsStorage({ 
-    url: MONGO_URL,
+    url: MONGO_FILE_URL,
     file: (req,file) => ({filename:shortid.generate()})
 })
 const upload = multer({ storage })
@@ -90,7 +93,7 @@ app.route('/api/articles/:id')
     })
 
 app.post('/api/images', upload.single('photo'), async(req,res,next) => {
-    res.json(req.file)
+    res.json({filename: req.file.filename})
 })
 
 app.get('/api/images', async(req,res) => {
@@ -98,13 +101,12 @@ app.get('/api/images', async(req,res) => {
     res.json(imageList)
 })
 
-app.route('/api/images/:id')
-    .get((req,res) => {
-        gfs.files.findOne({filename:req.params.id}, (err,file) => {
-            if(err) throw err
-            const readstream = gfs.createReadStream(file.filename)
-            readstream.pipe(res)
-        })
+app.get('/api/images/:id', (req,res) => {
+    gfs.files.findOne({filename:req.params.id}, (err,file) => {
+        if(err) throw err
+        const readstream = gfs.createReadStream(file.filename)
+        readstream.pipe(res)
     })
+})
 
 app.listen(PORT, () => console.log(`listening to port ${PORT}`))

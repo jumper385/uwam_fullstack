@@ -22,11 +22,32 @@ class Create extends Component {
     console.log(allArticles)
   }
 
+  onUploadChange = async (e) => {
+    this.setState({file: e.target.files[0]})
+  }
+
+  onSubmitFile = async(e) => {
+    e.preventDefault()
+    let formData = new FormData()
+    formData.append('photo', this.state.file)
+    let axiosData = await axios.post('/api/images', formData)
+    console.log(axiosData.data.filename)
+    this.setState({recentFilename:axiosData.data.filename})
+  }
+
   render() {
     return (
       <div>
         <h1>Create a New Article</h1>
         <p>Articles need to be written!!! 🤯</p>
+        <br />
+        <p>Submit an Image</p>
+        <form>
+          <input name='photo' onChange={this.onUploadChange} type='file' />
+          <input type='submit' onClick={this.onSubmitFile}/>
+        </form>
+        <p>{`copy this URL for the last img: /api/images/${this.state.recentFilename}` || 'no recent image id'}</p>
+        <br />
         <form>
           <p>Title</p>
           <input name='title' type='text' onChange={this.onChange}/>
