@@ -22,7 +22,7 @@ class ArticlePage extends Component {
         return(
             <div>
                 <h1>{this.state ? this.state.title || 'no title just yet...' : 'loading title...'}</h1>
-                <ReactMarkdown source={this.state ? this.state.article || 'no article just yet...' : 'loading article...'}/> 
+                <ReactMarkdown className='Article' source={this.state ? this.state.article || 'no article just yet...' : 'loading article...'}/> 
             </div>
         )
     }

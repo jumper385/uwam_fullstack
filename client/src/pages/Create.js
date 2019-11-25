@@ -56,7 +56,7 @@ class Create extends Component {
           <br />
           <button onClick={this.onSubmit}>Submit</button>
         </form>
-        < ReactMarkdown source={this.state.article || 'no article present'}/>
+        < ReactMarkdown className='Article' source={this.state.article || 'no article present'}/>
       </div>
     )
   }
