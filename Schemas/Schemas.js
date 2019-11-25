@@ -7,7 +7,8 @@ const User = new mongoose.Schema({
 
 const Article = new mongoose.Schema({
     title:String,
-    article:String
+    article:String,
+    category:String
 })
 
 module.exports = {

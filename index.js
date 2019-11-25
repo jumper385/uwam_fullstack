@@ -75,7 +75,7 @@ app.route('/api/articles')
 
     .post(async(req,res) => {
         const {title, article} = req.body
-        let newArticle = await Schemas.Article.create({title:title, article:article})
+        let newArticle = await Schemas.Article.create({title:title, article:article, category:category})
         res.json(newArticle)
     })
 

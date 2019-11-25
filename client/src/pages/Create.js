@@ -51,6 +51,8 @@ class Create extends Component {
         <form>
           <p>Title</p>
           <input name='title' type='text' onChange={this.onChange}/>
+          <p>Category</p>
+          <input name='category' type='text' onChange={this.onChange}/>
           <p>Article</p>
           <textarea name='article' onChange={this.onChange}/>
           <br />
